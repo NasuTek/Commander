@@ -595,6 +595,7 @@ void QBtView::enter( const QModelIndex& in_index )
    }
    else {                                             // PLIK (NIE KATALOG)
       if( fi.isExecutable() ) {                       // wykonywalne
+#if !_WIN32
          if( QBtShared::is_binary_file( fpath ) ) {   // program
             static const QString PRG = "%1 &";
             system( PRG.arg( fpath ).toLocal8Bit() );
@@ -605,6 +606,9 @@ void QBtView::enter( const QModelIndex& in_index )
             const QString cmd = QBtShared::is_gnome() ? GNOME : KDE;
             system( cmd.arg( dir ).arg( fpath ).toLocal8Bit() );
          }
+#else
+          ShellExecuteA(NULL, "open", fpath.toLocal8Bit(), NULL, dir.toLocal8Bit(), SW_SHOWNORMAL);
+#endif
       }
       else {                                          // ZWYKLY PLIK
          const QString ext = fi.suffix().toLower();
@@ -624,7 +628,7 @@ void QBtView::enter( const QModelIndex& in_index )
             const QString cmd = QBtShared::is_gnome() ? GNOME : KDE;
             system( cmd.arg( fpath ).toLocal8Bit() );
 #else
-             ShellExecuteA(NULL, "open", fpath.toLocal8Bit(), NULL, NULL, SW_SHOWNORMAL);
+             ShellExecuteA(NULL, "open", fpath.toLocal8Bit(), NULL, dir.toLocal8Bit(), SW_SHOWNORMAL);
 #endif
          }
       }

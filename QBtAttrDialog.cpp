@@ -39,20 +39,30 @@
 #include <QProcess>
 #include <QtDebug>
 
+#if _WIN32
+#include <windows.h>
+#endif
+
 /*------- constants:
 -------------------------------------------------------------------*/
 const char* const QBtAttrDialog::CAPTION   = QT_TR_NOOP( "Access permissions"  );
 const char* const QBtAttrDialog::FILE_NAME = QT_TR_NOOP( "File name: "  );
-const char* const QBtAttrDialog::USER      = QT_TR_NOOP( "User"  );
-const char* const QBtAttrDialog::GROUP     = QT_TR_NOOP( "Group"  );
-const char* const QBtAttrDialog::OTHER     = QT_TR_NOOP( "Other"  );
 const char* const QBtAttrDialog::RECURSIVE = QT_TR_NOOP( "&Recursive"  );
 const char* const QBtAttrDialog::ACCEPT    = QT_TR_NOOP( "&Accept"  );
 const char* const QBtAttrDialog::CLOSE     = QT_TR_NOOP( "&Close"  );
+#if !_WIN32
+const char* const QBtAttrDialog::USER      = QT_TR_NOOP( "User"  );
+const char* const QBtAttrDialog::GROUP     = QT_TR_NOOP( "Group"  );
+const char* const QBtAttrDialog::OTHER     = QT_TR_NOOP( "Other"  );
 const char* const QBtAttrDialog::READ      = QT_TR_NOOP( "read"  );
 const char* const QBtAttrDialog::WRITE     = QT_TR_NOOP( "write"  );
 const char* const QBtAttrDialog::EXECUTE   = QT_TR_NOOP( "execute"  );
-
+#else
+const char* const QBtAttrDialog::READONLY     = QT_TR_NOOP( "read-only"  );
+const char* const QBtAttrDialog::HIDDEN      = QT_TR_NOOP( "hidden"  );
+const char* const QBtAttrDialog::ARCHIVE     = QT_TR_NOOP( "archive"  );
+const char* const QBtAttrDialog::SYSTEM   = QT_TR_NOOP( "system"  );
+#endif
 
 //*******************************************************************
 // QBtAttDialog                                          CONSTRUCTOR
@@ -60,6 +70,8 @@ const char* const QBtAttrDialog::EXECUTE   = QT_TR_NOOP( "execute"  );
 QBtAttrDialog::QBtAttrDialog( QWidget* in_parent, const SelectionsSet& in_data ) : QDialog( in_parent )
 , data_       ( in_data                            )
 , path_       ( new QLabel     ( *data_.begin()  ) )
+, recursive_  ( new QCheckBox  ( tr( RECURSIVE ) ) )
+  #if !_WIN32
 , user_read_  ( new QCheckBox  ( tr( READ      ) ) )
 , user_write_ ( new QCheckBox  ( tr( WRITE     ) ) )
 , user_exec_  ( new QCheckBox  ( tr( EXECUTE   ) ) )
@@ -69,7 +81,12 @@ QBtAttrDialog::QBtAttrDialog( QWidget* in_parent, const SelectionsSet& in_data )
 , other_read_ ( new QCheckBox  ( tr( READ      ) ) )
 , other_write_( new QCheckBox  ( tr( WRITE     ) ) )
 , other_exec_ ( new QCheckBox  ( tr( EXECUTE   ) ) )
-, recursive_  ( new QCheckBox  ( tr( RECURSIVE ) ) )
+#else
+  , readonly_   ( new QCheckBox  (tr(READONLY)))
+  , hidden_ (new QCheckBox(tr(HIDDEN)))
+  , archive_ (new QCheckBox(tr(ARCHIVE)))
+  , system_ (new QCheckBox(tr(SYSTEM)))
+#endif
 , close_      ( new QPushButton( tr( CLOSE     ) ) )
 , accept_     ( new QPushButton( tr( ACCEPT    ) ) )
 {
@@ -80,6 +97,7 @@ QBtAttrDialog::QBtAttrDialog( QWidget* in_parent, const SelectionsSet& in_data )
    info_layout->addWidget( path_ );
    info_layout->setStretchFactor( path_, 100 );
    
+#if !_WIN32
    QGroupBox* const gbox_user = new QGroupBox( tr( USER ) );
    QVBoxLayout* const user_layout = new QVBoxLayout( gbox_user );
    user_layout->addWidget( user_read_ );
@@ -97,11 +115,20 @@ QBtAttrDialog::QBtAttrDialog( QWidget* in_parent, const SelectionsSet& in_data )
    other_layout->addWidget( other_read_ );
    other_layout->addWidget( other_write_ );
    other_layout->addWidget( other_exec_ );
+#endif
 
+#if !_WIN32
    QHBoxLayout* const gbox_layout = new QHBoxLayout;
    gbox_layout->addWidget( gbox_user );
    gbox_layout->addWidget( gbox_group );
    gbox_layout->addWidget( gbox_other );
+#else
+   QVBoxLayout* const gbox_layout = new QVBoxLayout;
+   gbox_layout->addWidget(readonly_);
+   gbox_layout->addWidget(hidden_);
+   gbox_layout->addWidget(archive_);
+   gbox_layout->addWidget(system_);
+#endif
 
    QHBoxLayout* const btn_layout = new QHBoxLayout;
    btn_layout->addWidget( recursive_ );
@@ -129,8 +156,9 @@ void QBtAttrDialog::set_info()
 {
    if( !are_dirs() ) recursive_->setEnabled( false );
 
+#if !_WIN32
    const QFile::Permissions p = QFileInfo( *data_.begin() ).permissions();
-   
+
    if( p & QFile::ReadUser   ) user_read_  ->setChecked( true );
    if( p & QFile::WriteUser  ) user_write_ ->setChecked( true );
    if( p & QFile::ExeUser    ) user_exec_  ->setChecked( true );
@@ -140,6 +168,19 @@ void QBtAttrDialog::set_info()
    if( p & QFile::ReadOther  ) other_read_ ->setChecked( true );
    if( p & QFile::WriteOther ) other_write_->setChecked( true );
    if( p & QFile::ExeOther   ) other_exec_ ->setChecked( true );
+#else
+   const QFileInfo info = QFileInfo( *data_.begin() );
+
+   DWORD attributes;
+   attributes = GetFileAttributesA(info.filePath().toLocal8Bit());
+
+   if (attributes == INVALID_FILE_ATTRIBUTES) return;
+
+   if (attributes & FILE_ATTRIBUTE_READONLY) readonly_->setChecked(true);
+   if (attributes & FILE_ATTRIBUTE_HIDDEN) hidden_->setChecked(true);
+   if (attributes & FILE_ATTRIBUTE_ARCHIVE) archive_->setChecked(true);
+   if (attributes & FILE_ATTRIBUTE_SYSTEM) system_->setChecked(true);
+#endif
 }
 // end of set_info
 
@@ -148,6 +189,7 @@ void QBtAttrDialog::set_info()
 //*******************************************************************
 QString QBtAttrDialog::get_info() const
 {
+#if !_WIN32
    static const QString PREFIX = "0";
    
    qint32 user_attr = 0;
@@ -169,6 +211,9 @@ QString QBtAttrDialog::get_info() const
             + QString::number( user_attr ) 
             + QString::number( group_attr )
             + QString::number( other_attr ));
+#else
+	return "";
+#endif
 }
 // end of get_info
 
@@ -194,6 +239,7 @@ bool QBtAttrDialog::are_dirs() const
 //*******************************************************************
 void QBtAttrDialog::accept()
 {
+#if !_WIN32
    static const QString COMMAND   = "chmod";
    static const QString SILENT    = "-v";
    static const QString RECURSIVE = "-R";
@@ -218,6 +264,9 @@ void QBtAttrDialog::accept()
       syscall.run( cmd + PATH.arg( *it ) );
       ++it;
    }
+#else
+
+#endif
    QDialog::accept();
 }
 // end of accept

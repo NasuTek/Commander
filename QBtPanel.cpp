@@ -46,6 +46,10 @@
 #include <QKeyEvent>
 #include <QtDebug>
 
+#if _WIN32
+#include <windows.h>
+#endif
+
 /*------- constants:
 -------------------------------------------------------------------*/
 const char* const QBtPanel::DIRS     = QT_TR_NOOP( "Dirs:"     );
@@ -449,6 +453,7 @@ void QBtPanel::current_path( const QString& in_path )
 //*******************************************************************
 void QBtPanel::update_fstab()
 {
+#if !_WIN32
    QStringList args;
    args << "-h" << "-T";
    
@@ -467,6 +472,18 @@ void QBtPanel::update_fstab()
          fstab_->addItem( items.last() );
       }
    }
+#else
+    //On Windows its not really an FSTAB but a Drive List. So we will list all the drives
+    //Windows knows about.
+
+    char szBuffer[1024];
+    GetLogicalDriveStringsA(1024, szBuffer);
+    char *pch = szBuffer;
+    while (*pch) {
+        fstab_->addItem(pch);
+        pch = &pch[strlen(pch) + 1];
+    }
+#endif
 }
 // end of update_fstab
 

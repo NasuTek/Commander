@@ -37,6 +37,10 @@
 #include <QWidget>
 #include <QDir>
 
+#if _WIN32
+#include <windows.h>
+#endif
+
 /*------- constants:
 -------------------------------------------------------------------*/
 const QChar       QBtShared::DIGIT_SEPARATOR = ',';
@@ -159,6 +163,7 @@ QString QBtShared::num2str( const qint64 in_value, const QChar& in_sep )
 //*******************************************************************
 QString QBtShared::access( const QBtFileInfo& in_fi )
 {
+#if !_WIN32
    const QFile::Permissions p = in_fi.permission();
    QString buffer = "----------";
 
@@ -176,6 +181,21 @@ QString QBtShared::access( const QBtFileInfo& in_fi )
    if( p & QFile::ExeOther   ) buffer[ 9 ] = 'x';
 
    return buffer;
+#else
+    QString buffer = "----";
+
+    DWORD attributes;
+    attributes = GetFileAttributesA(in_fi.path().toLocal8Bit());
+
+    if (attributes == INVALID_FILE_ATTRIBUTES) return buffer;
+
+    if (attributes & FILE_ATTRIBUTE_READONLY) buffer[0] = 'r';
+    if (attributes & FILE_ATTRIBUTE_HIDDEN) buffer[1] = 'h';
+    if (attributes & FILE_ATTRIBUTE_ARCHIVE) buffer[2] = 'a';
+    if (attributes & FILE_ATTRIBUTE_SYSTEM) buffer[3] = 's';
+
+    return buffer;
+#endif
 }
 // access
 

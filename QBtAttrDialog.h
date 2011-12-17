@@ -56,20 +56,29 @@ private:
 private:
    static const char* const CAPTION;
    static const char* const FILE_NAME;
-   static const char* const USER;
-   static const char* const GROUP;
-   static const char* const OTHER;
    static const char* const RECURSIVE;
    static const char* const ACCEPT;
    static const char* const CLOSE;
+#if !_WIN32
+   static const char* const USER;
+   static const char* const GROUP;
+   static const char* const OTHER;
    static const char* const READ;
    static const char* const WRITE;
    static const char* const EXECUTE;
+#else
+   static const char* const READONLY;
+   static const char* const HIDDEN;
+   static const char* const ARCHIVE;
+   static const char* const SYSTEM;
+#endif
 
 //******* MEMBERS *******
 private:
    SelectionsSet      data_;
    QLabel*      const path_;
+   QCheckBox*   const recursive_;
+#if !_WIN32
    QCheckBox*   const user_read_;
    QCheckBox*   const user_write_;
    QCheckBox*   const user_exec_;
@@ -79,7 +88,12 @@ private:
    QCheckBox*   const other_read_;
    QCheckBox*   const other_write_;
    QCheckBox*   const other_exec_;
-   QCheckBox*   const recursive_;
+#else
+   QCheckBox*   const readonly_;
+   QCheckBox*   const hidden_;
+   QCheckBox*   const archive_;
+   QCheckBox*   const system_;
+#endif
    QPushButton* const close_;
    QPushButton* const accept_;
 

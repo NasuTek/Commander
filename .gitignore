@@ -1,7 +1,7 @@
 # In repository we don't need to have:
 
 # Output Directories
-output-*
+output*
 
 # Generated MOC, resource and UI files
 moc_*.cpp
@@ -9,6 +9,7 @@ qrc_*.cpp
 ui_*.h
 Makefile
 Makefile.*
+*.user
 
 # .log files (usually created by QtTest - thanks to VestniK)
 *.log

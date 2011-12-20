@@ -45,6 +45,7 @@
 #include <QLineEdit>
 #include <QKeyEvent>
 #include <QtDebug>
+#include <QPushButton>
 
 #if _WIN32
 #include <windows.h>
@@ -69,6 +70,9 @@ QBtPanel::QBtPanel( const qint32 in_idx, QWidget* const in_parent ) : QWidget( i
 , dirs_     ( new QLabel )
 , files_    ( new QLabel )
 , selected_ ( new QLabel )
+, infolabel_( new QLabel )
+  , dotdot_   (new QPushButton(".."))
+  , rootbutton_(new QPushButton("/"))
 {
    path_->setEditable( true );
    path_->setDuplicatesEnabled( false );
@@ -83,12 +87,22 @@ QBtPanel::QBtPanel( const qint32 in_idx, QWidget* const in_parent ) : QWidget( i
    wstack_->setFocusPolicy( Qt::NoFocus );
 
    // sciezka/fstab ---------------------------------------
-   QHBoxLayout* const hb_top = new QHBoxLayout;
-   hb_top->setMargin( 0 );
-   hb_top->addWidget( path_ );
-   hb_top->addWidget( fstab_ );
-   hb_top->setStretchFactor( path_, 8 );
-   hb_top->setStretchFactor( fstab_, 2 );
+   QVBoxLayout* const hb_top = new QVBoxLayout;
+
+   QHBoxLayout* const hb_drivebar = new QHBoxLayout;
+   hb_drivebar->setMargin( 0 );
+   hb_drivebar->addWidget( fstab_ );
+   hb_drivebar->setStretchFactor( fstab_, 1 );
+
+   hb_drivebar->addWidget( infolabel_ );
+   hb_drivebar->addWidget( rootbutton_ );
+   hb_drivebar->addWidget( dotdot_ );
+   hb_drivebar->setStretchFactor( infolabel_, 8 );
+   rootbutton_->setFixedWidth(30);
+   dotdot_->setFixedWidth(30);
+
+   hb_top->addLayout(hb_drivebar);
+   hb_top->addWidget(path_);
 
    // opisy dirs/files/selected ---------------------------
    QHBoxLayout* const hb_dirs = new QHBoxLayout;
@@ -113,10 +127,10 @@ QBtPanel::QBtPanel( const qint32 in_idx, QWidget* const in_parent ) : QWidget( i
    QVBoxLayout* const vb = new QVBoxLayout;
    vb->setMargin( 4 );
    vb->setSpacing( 4 );
-   vb->addWidget( tbar_ );
    vb->addLayout( hb_top );
    vb->addWidget( wstack_ );
    vb->addLayout( grid );
+   vb->addWidget( tbar_ );
    vb->setStretchFactor( wstack_, 100 );
    setLayout( vb );
    

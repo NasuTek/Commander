@@ -45,7 +45,11 @@
 
 /*------- constants:
 -------------------------------------------------------------------*/
+#if !_WIN32
 const char* const QBtAttrDialog::CAPTION   = QT_TR_NOOP( "Access permissions"  );
+#else
+const char* const QBtAttrDialog::CAPTION   = QT_TR_NOOP( "Attributes"  );
+#endif
 const char* const QBtAttrDialog::FILE_NAME = QT_TR_NOOP( "File name: "  );
 const char* const QBtAttrDialog::RECURSIVE = QT_TR_NOOP( "&Recursive"  );
 const char* const QBtAttrDialog::ACCEPT    = QT_TR_NOOP( "&Accept"  );
@@ -123,11 +127,17 @@ QBtAttrDialog::QBtAttrDialog( QWidget* in_parent, const SelectionsSet& in_data )
    gbox_layout->addWidget( gbox_group );
    gbox_layout->addWidget( gbox_other );
 #else
-   QVBoxLayout* const gbox_layout = new QVBoxLayout;
-   gbox_layout->addWidget(readonly_);
-   gbox_layout->addWidget(hidden_);
-   gbox_layout->addWidget(archive_);
-   gbox_layout->addWidget(system_);
+   QHBoxLayout* const gbox_layout = new QHBoxLayout;
+
+   QVBoxLayout* const gbox_layout_a = new QVBoxLayout;
+   gbox_layout_a->addWidget(readonly_);
+   gbox_layout_a->addWidget(hidden_);
+   QVBoxLayout* const gbox_layout_b = new QVBoxLayout;
+   gbox_layout_b->addWidget(archive_);
+   gbox_layout_b->addWidget(system_);
+
+   gbox_layout->addLayout(gbox_layout_a);
+   gbox_layout->addLayout(gbox_layout_b);
 #endif
 
    QHBoxLayout* const btn_layout = new QHBoxLayout;

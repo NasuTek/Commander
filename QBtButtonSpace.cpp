@@ -40,7 +40,11 @@
 -------------------------------------------------------------------*/
 const char* const QBtButtonSpace::LABEL[] = {
    QT_TR_NOOP( "Help"   ),
+#if !_WIN32
    QT_TR_NOOP( "Access" ),
+#else
+   QT_TR_NOOP( "Attributes" ),
+#endif
    QT_TR_NOOP( "View"   ),
    QT_TR_NOOP( "Edit"   ),
    QT_TR_NOOP( "Copy"   ),

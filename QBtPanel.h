@@ -39,6 +39,7 @@ class QStackedWidget;
 class QLabel;
 class QComboBox;
 class QBtView;
+class QPushButton;
 
 /*------- class declaration:
 -------------------------------------------------------------------*/
@@ -70,6 +71,9 @@ private:
    QLabel*         const dirs_;
    QLabel*         const files_;
    QLabel*         const selected_;
+   QLabel*         const infolabel_;
+   QPushButton*    const dotdot_;
+   QPushButton*    const rootbutton_;
 
 //******* METHODS *******
 public:

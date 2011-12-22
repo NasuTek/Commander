@@ -1,3 +1,21 @@
+##############################################################################
+#  NasuTek Commander
+#  Copyright © 2012 NasuTek Enterprises <mmanley@nasutek.com>
+#  Copyright © 2005-2008 Piotr Pszczolkowski <piotr@beesoft.org>
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+##############################################################################
+
 project(nc)
 cmake_minimum_required(VERSION 2.8)
 find_package(Qt4 REQUIRED)
@@ -26,9 +44,35 @@ else(WIN32 AND NOT UNIX)
 endif(WIN32 AND NOT UNIX)
 set(CPACK_PACKAGE_EXECUTABLES "nc" "NasuTek Commander")
 
-set(nc_SOURCES QBtAttrDialog.cpp QBtButtonSpace.cpp QBtCanOverwrite.cpp QBtColorDemo.cpp QBtCompareDirsDialog.cpp QBtCompareFileDialog.cpp QBtConfig.cpp QBtConfigApps.cpp QBtConfigButtons.cpp QBtConfigDialog.cpp QBtConfigExtensions.cpp QBtConfigPanels.cpp QBtCopyDialog.cpp QBtDeleteQuest.cpp QBtDeleter.cpp QBtDirCopyDialog.cpp QBtDirModel.cpp QBtDirParser.cpp QBtDirSelector.cpp QBtDirWorkedThread.cpp QBtEditExtensions.cpp QBtEventsController.cpp QBtFileComparator.cpp QBtFileEditor.cpp QBtFileJoiner.cpp QBtFileViewer.cpp QBtFinder.cpp QBtHelp.cpp QBtInfoLabel.cpp QBtMainWindow.cpp QBtPackDialog.cpp QBtPanel.cpp QBtPointsButton.cpp QBtSettings.cpp QBtShared.cpp QBtSyncDirsDialog.cpp QBtSystemCall.cpp QBtSystemInfo.cpp QBtTimeStamp.cpp QBtView.cpp QBtViewDelegate.cpp QBtViewModel.cpp QBtWiper.cpp QBtWorkedThread.cpp QBtWorkspace.cpp bsc.cpp)
-set(nc_HEADERS QBtAttrDialog.h QBtButtonSpace.h QBtCanOverwrite.h QBtColorDemo.h QBtCompareDirsDialog.h QBtCompareFileDialog.h QBtConfig.h QBtConfigApps.h QBtConfigButtons.h QBtConfigDialog.h QBtConfigExtensions.h QBtConfigPanels.h QBtCopyDialog.h QBtDeleteQuest.h QBtDeleter.h QBtDirCopyDialog.h QBtDirModel.h QBtDirParser.h QBtDirSelector.h QBtDirWorkedThread.h QBtEditExtensions.h QBtEventsController.h QBtFileComparator.h QBtFileEditor.h QBtFileJoiner.h QBtFileViewer.h QBtFinder.h QBtHelp.h QBtInfoLabel.h QBtMainWindow.h QBtPackDialog.h QBtPanel.h QBtPointsButton.h QBtSettings.h QBtShared.h QBtSyncDirsDialog.h QBtSystemInfo.h QBtTabBar.h QBtTimeStamp.h QBtView.h QBtViewDelegate.h QBtViewModel.h QBtWiper.h QBtWorkedThread.h QBtWorkspace.h)
-set(nc_RESOURCES bsc.qrc)
+set(nc_SOURCES src/QBtAttrDialog.cpp src/QBtButtonSpace.cpp src/QBtCanOverwrite.cpp src/QBtColorDemo.cpp
+    src/QBtCompareDirsDialog.cpp src/QBtCompareFileDialog.cpp src/QBtConfig.cpp src/QBtConfigApps.cpp
+    src/QBtConfigButtons.cpp src/QBtConfigDialog.cpp src/QBtConfigExtensions.cpp src/QBtConfigPanels.cpp
+    src/QBtCopyDialog.cpp src/QBtDeleteQuest.cpp src/QBtDeleter.cpp src/QBtDirCopyDialog.cpp
+    src/QBtDirModel.cpp src/QBtDirParser.cpp src/QBtDirSelector.cpp src/QBtDirWorkedThread.cpp
+    src/QBtEditExtensions.cpp src/QBtEventsController.cpp src/QBtFileComparator.cpp src/QBtFileEditor.cpp
+    src/QBtFileJoiner.cpp src/QBtFileViewer.cpp src/QBtFinder.cpp src/QBtHelp.cpp
+    src/QBtInfoLabel.cpp src/QBtMainWindow.cpp src/QBtPackDialog.cpp src/QBtPanel.cpp
+    src/QBtPointsButton.cpp src/QBtSettings.cpp src/QBtShared.cpp src/QBtSyncDirsDialog.cpp
+    src/QBtSystemCall.cpp src/QBtSystemInfo.cpp src/QBtTimeStamp.cpp src/QBtView.cpp
+    src/QBtViewDelegate.cpp src/QBtViewModel.cpp src/QBtWiper.cpp src/QBtWorkedThread.cpp
+    src/QBtWorkspace.cpp src/bsc.cpp)
+
+set(nc_HEADERS includes/QBtAttrDialog.h includes/QBtButtonSpace.h includes/QBtCanOverwrite.h includes/QBtColorDemo.h
+    includes/QBtCompareDirsDialog.h includes/QBtCompareFileDialog.h includes/QBtConfig.h includes/QBtConfigApps.h
+    includes/QBtConfigButtons.h includes/QBtConfigDialog.h includes/QBtConfigExtensions.h includes/QBtConfigPanels.h
+    includes/QBtCopyDialog.h includes/QBtDeleteQuest.h includes/QBtDeleter.h includes/QBtDirCopyDialog.h
+    includes/QBtDirModel.h includes/QBtDirParser.h includes/QBtDirSelector.h includes/QBtDirWorkedThread.h
+    includes/QBtEditExtensions.h includes/QBtEventsController.h includes/QBtFileComparator.h includes/QBtFileEditor.h
+    includes/QBtFileJoiner.h includes/QBtFileViewer.h includes/QBtFinder.h includes/QBtHelp.h
+    includes/QBtInfoLabel.h includes/QBtMainWindow.h includes/QBtPackDialog.h includes/QBtPanel.h
+    includes/QBtPointsButton.h includes/QBtSettings.h includes/QBtShared.h includes/QBtSyncDirsDialog.h
+    includes/QBtSystemInfo.h includes/QBtTabBar.h includes/QBtTimeStamp.h includes/QBtView.h
+    includes/QBtViewDelegate.h includes/QBtViewModel.h includes/QBtWiper.h includes/QBtWorkedThread.h
+    includes/QBtWorkspace.h)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/includes)
+
+set(nc_RESOURCES rc/bsc.qrc)
 
 qt4_wrap_cpp(nc_HEADERS_MOC ${nc_HEADERS})
 qt4_add_resources(nc_RESOURCES_RCC ${nc_RESOURCES})
@@ -38,9 +82,9 @@ add_definitions(${QT_DEFINITIONS})
 
 if(WIN32)
 	set(CMAKE_EXE_LINKER_FLAGS "-static")
-	add_executable(nc WIN32 ${nc_SOURCES} ${nc_HEADERS_MOC} ${nc_RESOURCES_RCC} nc.rc)
+        add_executable(nc WIN32 ${nc_SOURCES} ${nc_HEADERS_MOC} ${nc_RESOURCES_RCC} rc/nc.rc)
 else()
-	add_executable(nc ${nc_SOURCES} ${nc_HEADERS_MOC} ${nc_RESOURCES_RCC})
+        add_executable(nc ${nc_SOURCES} ${nc_HEADERS_MOC} ${nc_RESOURCES_RCC})
 endif()
 
 target_link_libraries(nc ${QT_LIBRARIES})

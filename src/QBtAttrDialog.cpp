@@ -266,7 +266,22 @@ void QBtAttrDialog::accept()
       ++it;
    }
 #else
+    DWORD value;
+    static const QString PATH      = "%1";
 
+    if(readonly_->isChecked() == true) value || FILE_ATTRIBUTE_READONLY;
+    if(archive_->isChecked() == true) value || FILE_ATTRIBUTE_ARCHIVE;
+    if(hidden_->isChecked() == true) value || FILE_ATTRIBUTE_HIDDEN;
+    if(system_->isChecked() == true) value || FILE_ATTRIBUTE_SYSTEM;
+
+    SelectionsSet::const_iterator it = data_.begin();
+    const SelectionsSet::const_iterator end = data_.end();
+    while( it != end ) {
+       path_->setText( *it );
+       printf(PATH.arg( *it ).toLocal8Bit());
+       SetFileAttributesA(PATH.arg( *it ).toLocal8Bit(), value);
+       ++it;
+    }
 #endif
    QDialog::accept();
 }

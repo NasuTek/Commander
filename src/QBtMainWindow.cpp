@@ -115,7 +115,7 @@ const char* const QBtMainWindow::ES_LANG = QT_TR_NOOP( "&Spanish (es)" );
 const char* const QBtMainWindow::ABOUT_QT_ICON  = "qt.png";
 const char* const QBtMainWindow::ABOUT_BSC_ICON = "bsc.png";
 const char* const QBtMainWindow::ABOUT_QT       = QT_TR_NOOP( "About &Qt" );
-const char* const QBtMainWindow::ABOUT_BSC      = QT_TR_NOOP( "&About a NasuTek Commander" );
+const char* const QBtMainWindow::ABOUT_BSC      = QT_TR_NOOP( "&About NasuTek Commander" );
 
 
 //*******************************************************************
@@ -722,14 +722,25 @@ void QBtMainWindow::about_qt()
 void QBtMainWindow::about_bsc()
 {
    static const QString text =
-      "<qt>"
-      "<h3>%1</h3>"
-      "<font color=blue>This is a two panel file manager.</font>"
-      "<hr>"
-      "Author: Piotr Pszczolkowski<br>"
-      "Contact: piotr@beesoft.at<br>"
-      "Home page: www.beesoft.at"
-      "</qt>";
+           "<p>"
+           "<span style=\" font-size:8pt; font-weight:600;\">NasuTek Commander</span><br />"
+           "Version: %1<br />"
+           "Copyright © 2012 NasuTek Enterprises<br />"
+           "Copyright © 2005-2008 Piotr Pszczólkowski<br />";
+           "</p>"
+           "<pre>"
+           "Licensed under the Apache License, Version 2.0 (the \"License\");"
+           "you may not use this file except in compliance with the License."
+           "You may obtain a copy of the License at"
+           ""
+           "    http://www.apache.org/licenses/LICENSE-2.0"
+           ""
+           "Unless required by applicable law or agreed to in writing, software"
+           "distributed under the License is distributed on an \"AS IS\" BASIS,"
+           "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied."
+           "See the License for the specific language governing permissions and"
+           "limitations under the License."
+           "</pre>";
    QMessageBox::about( this, "About NasuTek Commander", text.arg( QBtShared::program_name() ) );
 }
 // end of about_bsc

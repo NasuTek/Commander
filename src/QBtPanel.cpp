@@ -83,12 +83,11 @@ QBtPanel::QBtPanel( const qint32 in_idx, QWidget* const in_parent ) : QWidget( i
    QHBoxLayout* const hb_drivebar = new QHBoxLayout;
    hb_drivebar->setMargin( 0 );
    hb_drivebar->addWidget( fstab_ );
-   hb_drivebar->setStretchFactor( fstab_, 1 );
-
    hb_drivebar->addWidget( infolabel_ );
    hb_drivebar->addWidget( rootbutton_ );
    hb_drivebar->addWidget( dotdot_ );
    hb_drivebar->setStretchFactor( infolabel_, 8 );
+   fstab_->setFixedWidth(80);
    rootbutton_->setFixedWidth(30);
    dotdot_->setFixedWidth(30);
 

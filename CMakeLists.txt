@@ -61,7 +61,7 @@ set(nc_SOURCES src/QBtAttrDialog.cpp src/QBtButtonSpace.cpp src/QBtCanOverwrite.
     src/QBtPointsButton.cpp src/QBtSettings.cpp src/QBtShared.cpp src/QBtSyncDirsDialog.cpp
     src/QBtSystemCall.cpp src/QBtSystemInfo.cpp src/QBtTimeStamp.cpp src/QBtView.cpp
     src/QBtViewDelegate.cpp src/QBtViewModel.cpp src/QBtWiper.cpp src/QBtWorkedThread.cpp
-    src/QBtWorkspace.cpp src/bsc.cpp)
+    src/QBtWorkspace.cpp src/nc.cpp)
 
 set(nc_HEADERS includes/QBtAttrDialog.h includes/QBtButtonSpace.h includes/QBtCanOverwrite.h includes/QBtColorDemo.h
     includes/QBtCompareDirsDialog.h includes/QBtCompareFileDialog.h includes/QBtConfig.h includes/QBtConfigApps.h
@@ -76,7 +76,7 @@ set(nc_HEADERS includes/QBtAttrDialog.h includes/QBtButtonSpace.h includes/QBtCa
     includes/QBtViewDelegate.h includes/QBtViewModel.h includes/QBtWiper.h includes/QBtWorkedThread.h
     includes/QBtWorkspace.h)
 
-set(nc_RESOURCES rc/bsc.qrc)
+set(nc_RESOURCES rc/nc.qrc)
 
 ##############################################################################
 #  Include Declerations

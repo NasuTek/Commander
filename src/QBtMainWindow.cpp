@@ -1,7 +1,7 @@
 /*****************************************************************************
  * NasuTek Commander
- * Copyright © 2012 NasuTek Enterprises <mmanley@nasutek.com>
- * Copyright © 2005-2008 Piotr Pszczolkowski <piotr@beesoft.org>
+ * Copyright (C) 2012 NasuTek Enterprises <mmanley@nasutek.com>
+ * Copyright (C) 2005-2008 Piotr Pszczolkowski <piotr@beesoft.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -725,8 +725,8 @@ void QBtMainWindow::about_bsc()
            "<p>"
            "<span style=\" font-size:8pt; font-weight:600;\">NasuTek Commander</span><br />"
            "Version: %1<br />"
-           "Copyright © 2012 NasuTek Enterprises<br />"
-           "Copyright © 2005-2008 Piotr Pszczólkowski<br />";
+           "Copyright (C) 2012 NasuTek Enterprises<br />"
+           "Copyright (C) 2005-2008 Piotr Pszczolkowski<br />";
            "</p>"
            "<pre>"
            "Licensed under the Apache License, Version 2.0 (the \"License\");"

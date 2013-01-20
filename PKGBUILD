@@ -1,6 +1,6 @@
 # $Id: pkgbuild-mode.el,v 1.23 2007/10/20 16:02:14 juergen Exp $
 # Maintainer: Michael Manley <mmanley@NTE-WRKSTN-2.NASUTEK-CORE.NISN.nasutek.com>
-pkgname=NasuTek-Commander  
+pkgname=nasutek-commander  
 pkgver=5.0
 pkgrel=1 
 pkgdesc="A Total Commander-like application written in Qt for Windows, Linux, and Mac OS X. It is a continuation of Beesoft Commander."

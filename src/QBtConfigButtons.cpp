@@ -1,7 +1,7 @@
 /*****************************************************************************
  * NasuTek Commander
- * Copyright © 2012 NasuTek Enterprises <mmanley@nasutek.com>
- * Copyright © 2005-2008 Piotr Pszczolkowski <piotr@beesoft.org>
+ * Copyright (C) 2012 NasuTek Enterprises <mmanley@nasutek.com>
+ * Copyright (C) 2005-2008 Piotr Pszczolkowski <piotr@beesoft.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

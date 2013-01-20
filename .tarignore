@@ -1,0 +1,15 @@
+output*
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+Makefile
+Makefile.*
+*.user
+*.log
+Thumbs.db
+desktop.ini
+.DS_Store
+*~
+NasuTek-Commander-*.tar.bz2
+.tarignore
+PKGBUILD

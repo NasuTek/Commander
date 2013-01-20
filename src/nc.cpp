@@ -31,7 +31,7 @@
 //*******************************************************************
 int main( int in_argc, char** in_argv )
 {
-   Q_INIT_RESOURCE( bsc );
+   Q_INIT_RESOURCE( nc );
 
    QCoreApplication::setOrganizationName  ( QBtShared::ORGANISATION );
    QCoreApplication::setOrganizationDomain( QBtShared::ORGANISATION );

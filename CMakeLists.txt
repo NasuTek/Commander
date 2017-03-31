@@ -18,34 +18,11 @@
 
 project(nc)
 cmake_minimum_required(VERSION 2.8)
-find_package(Qt4 REQUIRED)
+find_package(Qt5Widgets)
+find_package(Qt5Core)
 
-include(InstallRequiredSystemLibraries)
-
-##############################################################################
-#  CPack Varables
-##############################################################################
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "NasuTek Commander")
-set(CPACK_PACKAGE_VENDOR "NasuTek Enterprises")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/licence.txt")
-set(CPACK_PACKAGE_VERSION_MAJOR "5")
-set(CPACK_PACKAGE_VERSION_MINOR "0")
-set(CPACK_PACKAGE_VERSION_PATCH "0")
-set(CPACK_PACKAGE_INSTALL_DIRECTORY "NasuTek Commander")
-if(WIN32 AND NOT UNIX)
-	#set(CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/Utilities/Release\\\\InstallIcon.bmp")
-	set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\nc.exe")
-	set(CPACK_NSIS_DISPLAY_NAME "NasuTek Commander")
-	set(CPACK_NSIS_HELP_LINK "http:\\\\\\\\www.nasutek.com")
-	set(CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\www.nasutek.com")
-	set(CPACK_NSIS_CONTACT "mmanley@nasutek.com")
-	set(CPACK_NSIS_MODIFY_PATH OFF)
-	set(CPACK_NSIS_COMPONENT_INSTALL ON)
-else(WIN32 AND NOT UNIX)
-	set(CPACK_STRIP_FILES "bin/nc")
-	set(CPACK_SOURCE_STRIP_FILES "")
-endif(WIN32 AND NOT UNIX)
-set(CPACK_PACKAGE_EXECUTABLES "nc" "NasuTek Commander")
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 ##############################################################################
 #  Source Code Varables (Includes/Headers/Resources/etc.)
@@ -85,46 +62,14 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/includes)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 ##############################################################################
-#  QT Generators
-##############################################################################
-qt4_wrap_cpp(nc_HEADERS_MOC ${nc_HEADERS})
-qt4_add_resources(nc_RESOURCES_RCC ${nc_RESOURCES})
-
-##############################################################################
-#  QT Includes
-##############################################################################
-include(${QT_USE_FILE})
-add_definitions(${QT_DEFINITIONS})
-
-##############################################################################
 #  NasuTek Commander Executable Target
 ##############################################################################
 if(WIN32)
-        add_executable(nc WIN32 ${nc_SOURCES} ${nc_HEADERS_MOC} ${nc_RESOURCES_RCC} rc/nc.rc)
+        add_executable(nc WIN32 ${nc_SOURCES} ${nc_HEADERS} ${nc_RESOURCES} rc/nc.rc)
 else()
-        add_executable(nc ${nc_SOURCES} ${nc_HEADERS_MOC} ${nc_RESOURCES_RCC})
+        add_executable(nc ${nc_SOURCES} ${nc_HEADERS} ${nc_RESOURCES})
 endif()
 
-target_link_libraries(nc ${QT_LIBRARIES})
+target_link_libraries(nc Qt5::Widgets Qt5::Core)
+
 install(TARGETS nc RUNTIME DESTINATION bin COMPONENT applications)
-
-##############################################################################
-#  QT Library Package Inclusion
-##############################################################################
-if(WIN32)
-    install(FILES ${QT_BINARY_DIR}/QtCore4.dll ${QT_BINARY_DIR}/QtGui4.dll ${QT_BINARY_DIR}/mingwm10.dll
-        ${QT_BINARY_DIR}/libgcc_s_dw2-1.dll DESTINATION bin COMPONENT qtruntime)
-    set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} qtruntime)
-    set(CPACK_COMPONENT_QTRUNTIME_DISPLAY_NAME "Qt 4 Runtime")
-endif()
-
-##############################################################################
-#  Application Package Inclusion
-##############################################################################
-set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} applications)
-set(CPACK_COMPONENT_APPLICATIONS_DISPLAY_NAME "NasuTek Commander Core Application")
-
-##############################################################################
-#  CPack Include
-##############################################################################
-include(CPack)

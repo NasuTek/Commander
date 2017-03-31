@@ -290,7 +290,7 @@ bool QBtCopyDialog::can_copy( const QString& in_src_path, QString& in_dst_path )
             retval = false;
             break_ = true;
       case QBtCanOverwrite::SKIP_FILE:
-            retval = FALSE;
+            retval = false;
             break;
         case QBtCanOverwrite::UPDATE_FILE:
             retval = can_update( in_src_path, in_dst_path );

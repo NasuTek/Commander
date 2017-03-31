@@ -57,7 +57,7 @@ QBtDirSelector::QBtDirSelector( QWidget* const in_parent, const QString& in_path
    hdr->setStretchLastSection( true );
    hdr->setSortIndicator( 0, Qt::AscendingOrder );
    hdr->setSortIndicatorShown( true );
-   hdr->setClickable( true );
+   hdr->setSectionsClickable( true );
    
    QHBoxLayout* const btn_layout = new QHBoxLayout;
    btn_layout->addStretch();

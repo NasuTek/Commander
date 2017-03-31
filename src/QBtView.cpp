@@ -73,7 +73,7 @@ QBtView::QBtView( const QString& in_path, QWidget* const in_parent )
    header()->setStretchLastSection( true );
    header()->setSortIndicator( 0, Qt::AscendingOrder );
    header()->setSortIndicatorShown( true );
-   header()->setClickable( true );
+   header()->setSectionsClickable( true );
 
    settings();
 
